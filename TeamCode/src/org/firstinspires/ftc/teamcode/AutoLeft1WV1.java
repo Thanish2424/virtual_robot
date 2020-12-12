@@ -34,7 +34,7 @@ public class AutoLeft1WV1 extends LinearOpMode {
         // Gets us to the target zone
         robot.StrafeCM(59, 0.8, this);
         System.out.println("strafe 59");
-        System.exit(0);
+
         if (ringAt == 'A') {
             robot.GoDistanceCM(59, .8, this);
             System.out.println("forward 59");
