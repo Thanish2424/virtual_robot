@@ -41,21 +41,20 @@ public class AutoLeft2WV1 extends LinearOpMode {
             robot.GoDistanceCM(177, .8, this);
         }
         // Add function that drops a wobble goal
-        // Move to the launch line
+        // Move to the other wobble goal
         if (ringAt == 'A') {
-            robot.StrafeCM(-59, .8, this);
-            robot.GoDistanceCM(27, .8, this);
+            robot.StrafeCM(118, .8, this);
+            robot.GoDistanceCM(-177, .8, this);
         }
         else if (ringAt == 'B') {
-            robot.GoDistanceCM(-27, .8, this);
+            robot.StrafeCM(59, .8, this);
+            robot.GoDistanceCM(-236, .8, this);
         }
         else {
-            robot.GoDistanceCM(-86, .8, this);
-            robot.StrafeCM(-59, .8, this);
+            robot.StrafeCM(118, .8, this);
+            robot.GoDistanceCM(-295, .8, this);
         }
         // Go to pick up other wobble goal
-        robot.StrafeCM(-59, .8, this);
-        robot.GoDistanceCM(-144, .8, this);
         robot.RotateDEG(90, .8, this);
         // Add function that picks up that wobble goal
         // Drive back to the target zones to drop off the second wobble goal
