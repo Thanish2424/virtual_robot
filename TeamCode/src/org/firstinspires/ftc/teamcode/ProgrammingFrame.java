@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -70,10 +71,11 @@ public class ProgrammingFrame
         backLeftMotor = hwMap.get(DcMotor.class, "back_left_motor");
         backRightMotor = hwMap.get(DcMotor.class, "back_right_motor");
 
-        frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
-        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotor.Direction.FORWARD);
-        backRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
+        backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotor.Direction.FORWARD);
+
         // Set all motors to zero power
         stopDriveMotors();
 //        frontLeftMotor.setPower(0);
@@ -95,14 +97,11 @@ public class ProgrammingFrame
 
     public void GoDistanceCM(int centimeters, double power, LinearOpMode linearOpMode){
 
-        final double conversion_factor = 8.46;
+        final double conversion_factor = 52;
         if (centimeters < 0 && power > 0) {
             power = power * -1;
         }
-        else if (centimeters > 0 && power < 0) {
-            centimeters = centimeters * -1;
-        }
-        int TICKS = (int) Math.round(centimeters * conversion_factor);
+        int TICKS = (int) Math.abs(Math.round(centimeters * conversion_factor));
 
         // Send telemetry message to signify robot waiting;
         systemTools.telemetry.addData("Status", "Resetting Encoders");
@@ -126,15 +125,7 @@ public class ProgrammingFrame
         int BLtarget = backLeftMotor.getCurrentPosition() + TICKS;
         int BRtarget = backRightMotor.getCurrentPosition() + TICKS;
 
-        frontLeftMotor.setTargetPosition(FLtarget);
-        frontRightMotor.setTargetPosition(FRtarget);
-        backLeftMotor.setTargetPosition(BLtarget);
-        backRightMotor.setTargetPosition(BRtarget);
-
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        startEncoders();
 
         // reset the timeout time and start motion.
         frontLeftMotor.setPower(power);
@@ -178,7 +169,7 @@ public class ProgrammingFrame
         else if (degrees > 0 && power < 0) {
             degrees = degrees * -1;
         }
-        int TICKS = (int) Math.round(degrees * conversion_factor);
+        int TICKS = (int) Math.abs(Math.round(degrees * conversion_factor));
         /*
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
@@ -206,21 +197,13 @@ public class ProgrammingFrame
         int BLtarget = backLeftMotor.getCurrentPosition() + TICKS;
         int BRtarget = backRightMotor.getCurrentPosition() - TICKS;
 
-        frontLeftMotor.setTargetPosition(FLtarget);
-        frontRightMotor.setTargetPosition(FRtarget);
-        backLeftMotor.setTargetPosition(BLtarget);
-        backRightMotor.setTargetPosition(BRtarget);
-
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        startEncoders();
 
         // reset the timeout time and start motion.
-        frontLeftMotor.setPower(power);
-        frontRightMotor.setPower(-power);
-        backRightMotor.setPower(-power);
-        backLeftMotor.setPower(power);
+        frontLeftMotor.setPower(-power);
+        frontRightMotor.setPower(power);
+        backRightMotor.setPower(power);
+        backLeftMotor.setPower(-power);
 
         // keep looping while we are still active, and there is time left, and both motors are running.
         // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -259,7 +242,7 @@ public class ProgrammingFrame
             centimeters = centimeters * -1;
         }
 
-        int TICKS = (int) Math.round(centimeters * conversion_factor);
+        int TICKS = (int) Math.abs(Math.round(centimeters * conversion_factor));
 
         // Send telemetry message to signify robot waiting;
         systemTools.telemetry.addData("Status", "Resetting Encoders");
@@ -282,20 +265,12 @@ public class ProgrammingFrame
         int BLtarget = backLeftMotor.getCurrentPosition() + TICKS;
         int BRtarget = backRightMotor.getCurrentPosition() - TICKS;
 
-        frontLeftMotor.setTargetPosition(FLtarget);
-        frontRightMotor.setTargetPosition(FRtarget);
-        backLeftMotor.setTargetPosition(BLtarget);
-        backRightMotor.setTargetPosition(BRtarget);
-
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        startEncoders();
 
         frontLeftMotor.setPower(-power);
         frontRightMotor.setPower(power);
-        backRightMotor.setPower(power);
-        backLeftMotor.setPower(-power);
+        backRightMotor.setPower(-power);
+        backLeftMotor.setPower(power);
 
         // keep looping while we are still active, and there is time left, and both motors are running.
         // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -323,6 +298,7 @@ public class ProgrammingFrame
         systemTools.telemetry.addData("counts", TICKS);
         systemTools.telemetry.update();
     }
+
 
 
 
