@@ -10,7 +10,7 @@ public class AutoLeft2WV1Blue extends LinearOpMode {
     // This program starts on the right line, drops off a wobble goal in it's target,
     // Goes to shoot at the center shooting spot, grabs second wobble goal and drops in it's target,
     // than drives to center shooting spot to park at the end.
-    char ringAt = 'A';
+    char ringAt = 'C';
     ProgrammingFrame robot   = new ProgrammingFrame();
     private ElapsedTime runtime = new ElapsedTime();
 

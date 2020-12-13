@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class GoDistance extends LinearOpMode {
 
-    ProgrammingFrame robot   = new ProgrammingFrame();
+    ProgrammingFrame robot;
     static final double conversion_factor = 8.46;
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -71,7 +71,6 @@ public class GoDistance extends LinearOpMode {
         // However, if you require that BOTH motors have finished their moves before the robot continues
         // onto the next step, use (isBusy() || isBusy()) in the loop test.
         while (opModeIsActive() &&
-                (runtime.seconds() < 30) &&
                 (Math.abs(robot.frontLeftMotor.getCurrentPosition()) < TICKS && Math.abs(robot.frontRightMotor.getCurrentPosition()) < TICKS && Math.abs(robot.backLeftMotor.getCurrentPosition()) < TICKS && Math.abs(robot.backRightMotor.getCurrentPosition()) < TICKS)) {
         }
 
@@ -93,7 +92,7 @@ public class GoDistance extends LinearOpMode {
     }
     @Override
     public void runOpMode() {
-
+         robot   = new ProgrammingFrame();
         GoDistanceCM(20, 0.5);
 
     }
