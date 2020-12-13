@@ -48,7 +48,6 @@ public class AutoLeft2WV1 extends LinearOpMode {
         }
         else if (ringAt == 'B') {
             robot.GoDistanceCM(-27, .8, this);
-            robot.StrafeCM(59, .8, this);
         }
         else {
             robot.GoDistanceCM(-86, .8, this);
